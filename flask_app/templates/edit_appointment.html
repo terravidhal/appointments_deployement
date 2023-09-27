@@ -1,0 +1,56 @@
+{%extends 'base.html'%} 
+  {%block content%}
+        <div class="header-right d-flex jcs aic">
+            <h2 class="m-0">Edit appointments !</h2>
+            <a href="/logout">Logout</a>
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for elt in messages %}
+        <div class="red">{{elt}}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form class="d-flex form-create border p-30" action="/appointment/edit/{{specific_appointment.id}}/process" method="POST">
+            <div class="content-left flex-1">
+                <div class="form-row my-4">
+                    <div class="form-group col-md-12 d-flex gap-4">
+                      <label for="tasks">Tasks</label>
+                      <input type="text" class="form-control" name="tasks" value="{{ specific_appointment.tasks }}" id="tasks">
+                    </div>
+                </div>
+                <div class="form-row my-4">
+                    <div class="form-group col-md-12 d-flex gap-4">
+                        <label for="date">Date</label>
+                        <input type="date" class="form-control" name="date" value="{{ specific_appointment.date }}"  id="date">
+                    </div>
+                    <div class="form-row my-4">
+                        <div class="form-group col-md-12 d-flex gap-4">
+                          <label for="status">Status</label>
+                          <select  name="status" id="status">
+                            {% if specific_appointment.status == 'Pending' %}
+                              <option value="Pending" selected>Pending</option>
+                            {% else %}
+                              <option value="Pending">Pending</option>
+                            {% endif %}
+                            {% if specific_appointment.status == 'Missed' %}
+                              <option value="Missed" selected>Missed</option>
+                            {% else %}
+                              <option value="Missed">Missed</option>
+                            {% endif %}
+                            {% if specific_appointment.status == 'Done' %}
+                              <option value="Done" selected>Done</option>
+                            {% else %}
+                              <option value="Done">Done</option>
+                            {% endif %}
+                          </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex jca new-new">
+                    <a class="btn btn-danger"  href="/dashboard">Cancel</a>
+                    <button type="submit" class="btn btn-success">Add</button>
+                </div>
+            </div>
+        </form>
+   {%endblock%}
